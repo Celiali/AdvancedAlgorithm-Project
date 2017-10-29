@@ -66,7 +66,7 @@ def extract(mlist, small_prime):
         if i % small_prime == 0 and i != small_prime:
             mlist.remove(i)
             mlist.append(int(small_prime))
-            mlist.append(int(i / small_prime))
+            mlist.append(int(i // small_prime))
             extract(mlist, small_prime)
 
 # 试除
@@ -74,4 +74,9 @@ def trival_div(mlist, pri_table):
     for i in pri_table:
         extract(mlist, i)
 
-# print(pollard(1681))
+print("test pollard, only find one factor")
+print(pollard(1681))
+M = [8965359720533367971*2*3]
+print("test trival division")
+trival_div(M, prime_table)
+print(M)
