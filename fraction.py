@@ -39,26 +39,35 @@ def randGen(x, N):
     return (x**2 + 1) % N
 
 # pollard
+# input a list contains the original factor
+# operate with the original list
 def pollard(N):
-    a = random.randint(1, N)
-    x = a
-    y = a
-    fraction_set = set()
-    # c = 1
-    # while True:
-    for i in range(1000000):
-        x = randGen(x, N)
-        y = randGen(randGen(y, N), N)
-        if x!=y:
-            # d = fractions.gcd(abs(x-y), N)
-            d = math.gcd(int(abs(x-y)), N)
-            if (d > 1) and (d<N):
-                return d
-                # fraction_set.add(d)
-                # print(d)
-        else:
-            x = random.randint(1,N)
-            y = x
+    for element in N:
+        if miller_rabin(element) is not True:
+            N.remove(element)
+            a = random.randint(1, element)
+            x = a
+            y = a
+            # c = 1
+            # while True:
+            for i in range(1000000):
+                x = randGen(x, element)
+                y = randGen(randGen(y, element), element)
+                if x!=y:
+                    # d = fractions.gcd(abs(x-y), N)
+                    d = math.gcd(int(abs(x-y)), element)
+                    if (d > 1) and (d<element):
+                        # return d
+                        N.append(d)
+                        N.append(element//d)
+                        pollard(N)
+                        return 1
+                        # fraction_set.add(d)
+                        # print(d)
+                else:
+                    x = random.randint(1,element)
+                    y = x
+    return 0
 
 # 试除法调用的一个子函数
 def extract(mlist, small_prime):
@@ -74,9 +83,11 @@ def trival_div(mlist, pri_table):
     for i in pri_table:
         extract(mlist, i)
 
-print("test pollard, only find one factor")
-print(pollard(1681))
-M = [8965359720533367971*2*3]
-print("test trival division")
+M = [5794746215675376587969763525444444657]
+# M=[807855320741025594307788028083709]
 trival_div(M, prime_table)
-print(M)
+
+big_factor = [M.pop()]
+print(pollard(big_factor))
+pollard(big_factor)
+print(M+big_factor)
