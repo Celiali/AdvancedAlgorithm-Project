@@ -51,14 +51,19 @@ def brent(nlist):
         if miller_rabin(N) is not True:
             # brent begin
             nlist.remove(N)
-            # c is a random number for f(x)
-            # m ??
+            # c is a random number for f(x)=(x^2+c)mod N
+            # m is the steps for k
             y, m, c = random.randint(1, N - 1), random.randint(1, N - 1), random.randint(1, N - 1)
+            # G is the result of GCD(q,N)
+            # q is the result of |x-y|, which should be used in GCD above to determine where to stop
+            # r is to get x(r)-x(k) where 3r/2<=k<2r
             r, G, q = 1, 1, 1
             while True:
                 if G > 1: break
                 x = y
                 for i in range(r):
+                    # we used mod N first on y^2 because it makes the calculation faster when N is a large number
+                    # this is different from the peusdo code
                     y = ((y * y) % N + c) % N
                 k = 0
                 while k < r and G == 1:
