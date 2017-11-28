@@ -23,15 +23,19 @@ int main() {
         cout << s.n[num-1].number;
     else{
         random_shuffle(s.n.begin(), s.n.end());
-        s.print_node();
+
+//      测试输出
+//      s.print_node();
+
 //        default_random_engine defaultEngine;
 //        shuffle(s.n.begin(), s.n.end(),defaultEngine);
-        State newState = simulatedAnnealing(s,0.01,100.0,0.9999,1000);
+        State newState = simulatedAnnealing(s,0.01,100.0,0.9999,10);
 
-        cout<< "evaluation"<< newState.evaluation()<<endl;
-        cout<< "number"<<endl;
+//      测试输出
+//        cout<< "evaluation"<< newState.evaluation()<<endl;
+//        cout<< "number"<<endl;
         for(int i = 0; i< newState.n.size();i++)
-            cout << newState.n[i].number<<" ";
+            cout << newState.n[i].number<<endl;
     }
 
     return 0;
@@ -45,9 +49,9 @@ State simulatedAnnealing(State s, double Tmin, double T, double r , int stop_ite
     State originalState;
     double originalEval = s.evaluation();
     originalState.n.assign(s.n.begin(), s.n.end());
-    //
-    cout<<"originalState";
-    originalState.print_node();
+    //      测试输出
+//    cout<<"originalState";
+//    originalState.print_node();
 
     int iter = 0;
 
@@ -57,23 +61,24 @@ State simulatedAnnealing(State s, double Tmin, double T, double r , int stop_ite
         while(T > Tmin){
             secondState.n = originalState.getRandomNewState();
             secondEval = secondState.evaluation();
-            //
-            cout<<"secondState";
-            secondState.print_node();
+            //测试输出
+//            cout<<"secondState";
+//            secondState.print_node();
 
             if (iter >= stop_iteration)
                 break;
             iter++;
             double dE = originalEval-secondEval;
-            cout<< "secondEval"<<secondEval<<endl;
+//            测试输出
+//            cout<< "secondEval"<<secondEval<<endl;
             if(dE >= 0)
             {
                 originalEval = secondEval;
                 originalState.n = secondState.n;
 
-                //
-                cout<<"originalState";
-                originalState.print_node();
+                //测试输出
+//                cout<<"originalState";
+//                originalState.print_node();
 
             }
             else{
@@ -89,9 +94,9 @@ State simulatedAnnealing(State s, double Tmin, double T, double r , int stop_ite
                     originalEval = secondEval;
                     originalState.n = secondState.n;
 
-                    //
-                    cout<<"originalState";
-                    originalState.print_node();
+                    //测试输出
+//                    cout<<"originalState";
+//                    originalState.print_node();
                 }
             }
             T = r*T;

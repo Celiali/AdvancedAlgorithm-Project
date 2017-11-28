@@ -36,7 +36,7 @@ public:
 //        std::default_random_engine random(time(NULL));
         std::random_device rd;
         std::default_random_engine gen =std::default_random_engine(rd());
-        std::uniform_int_distribution<int> dis1(0, int(length));
+        std::uniform_int_distribution<int> dis1(0, int(length)-1);
 //        srand((unsigned)time(NULL));
 //        unsigned long i = (rand() % (length));
 //        unsigned long j = (rand() % (length));;
@@ -45,10 +45,10 @@ public:
         int j = dis1(gen);
         while(j == i)
             j = dis1(gen);
-        auto it_i = n.begin()+int(i);
+        auto it_i = n.begin()+i;
         Node temp = *it_i;
         n.erase(it_i);
-        auto it_j=n.begin()+int(j);
+        auto it_j=n.begin()+j;
         n.insert(it_j, temp);
         return n;
     }
@@ -70,7 +70,7 @@ public:
     {
         std::cout<<"print node\n";
         for (std::vector<Node>::iterator it= n.begin(); it!= n.end(); ++it)
-            std::cout << ' ' << (*it).xPost <<" " << (*it).yPost <<" "<<(*it).number<<" ";
+            std::cout << ' ' << (*it).number<<" ";
         std::cout << '\n';
     }
 };
