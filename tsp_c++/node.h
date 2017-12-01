@@ -26,4 +26,6 @@ public:
 
 };
 
+
+
 #endif //TSP_NODE_H
