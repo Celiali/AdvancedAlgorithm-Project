@@ -89,7 +89,7 @@ public:
         double eval = 0.0;
         std::random_device rd;
         std::default_random_engine gen =std::default_random_engine(rd());
-        std::uniform_int_distribution<int> dis1(0, int(length)-1);
+        std::uniform_int_distribution<int> dis1(0, int(length));
 
         int i = dis1(gen);
         int j = dis1(gen);
@@ -104,34 +104,58 @@ public:
 
 //        eval = Eval-distance(*(it_i-1),*(it_i))-distance(*(it_j-1),*(it_j));
 //        eval = eval+ distance(*(it_i-1),*(it_j-1))+distance(*(it_i),*(it_j));
-        eval = Eval - distance(n[mini-1],n[mini]) - distance(n[maxi-1],n[maxi]);
-        eval += distance(n[mini-1],n[maxi-1]) + distance(n[maxi],n[mini]);
-
+        if(mini == 0) {
+            double temp = distance(n[length - 1], n[0]);
+            double temp2=distance(n[maxi - 1], n[maxi]);
+            cout<<"0"<<temp<<" "<<temp2<<endl;
+            eval = Eval - distance(n[length - 1], n[0]) - distance(n[maxi - 1], n[maxi]);
+            eval += distance(n[length-1], n[maxi - 1]) + distance(n[maxi], n[0]);
+        }
+        else if(maxi == length){
+            double temp = distance(n[length - 1], n[0]);
+            double temp2=distance(n[mini - 1], n[mini]);
+            cout<<"1"<<temp<<" "<<temp2<<endl;
+            eval = Eval - distance(n[length - 1], n[0]) - distance(n[mini - 1], n[mini]);
+            eval += distance(n[length-1], n[mini - 1]) + distance(n[mini], n[0]);
+        }
+        else{
+            double temp= distance(n[mini - 1], n[mini]);
+            double temp2=distance(n[maxi - 1], n[maxi]);
+            cout<<"2"<<temp<<" "<<temp2<<endl;
+            eval = Eval - distance(n[mini - 1], n[mini]) - distance(n[maxi - 1], n[maxi]);
+            eval += distance(n[mini - 1], n[maxi - 1]) + distance(n[maxi], n[mini]);
+        }
         a = mini;
         b = maxi;
 
         return eval;
     }
     vector<Node> opt2(int mini, int maxi){
+        cout<<"before_opt2"<<endl;
+        print_node();
 
-//        auto it_i = n.begin()+mini;
-//        auto it_j=n.begin()+maxi;
+        auto it_i = n.begin()+mini;
+        auto it_j=n.begin()+maxi;
 
-//        vector<Node> b;
-//        b.assign(it_i, it_j);
-//
-//        n.erase(it_i,it_j);
-//        reverse(b.begin(),b.end());
-//        n.insert(it_i,b.begin(),b.end());
-        vector<Node> after;
-        for(int i=0; i<n.size();i++){
-            if(i<mini || i>=maxi){
-                after.push_back(n[i]);
-            } else {
-                after.push_back(n[mini+maxi-1-i]);
-            }
-        }
-        return after;
+        vector<Node> b;
+        b.assign(it_i, it_j);
+
+        n.erase(it_i,it_j);
+        reverse(b.begin(),b.end());
+        n.insert(it_i,b.begin(),b.end());
+        cout<<"after_opt2"<<endl;
+        print_node();
+        return n;
+
+//        vector<Node> after;
+//        for(int i=0; i<n.size();i++){
+//            if(i<mini || i>=maxi){
+//                after.push_back(n[i]);
+//            } else {
+//                after.push_back(n[mini+maxi-1-i]);
+//            }
+//        }
+//        return after;
     }
 
     void evaluation(){
