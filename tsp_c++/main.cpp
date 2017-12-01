@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <random>
 #include "node.h"
 #include "state.h"
 
@@ -44,11 +43,11 @@ int main() {
 //        cout<<s.Eval<<endl;
 //        State newState = simulatedAnnealing(s,0.0001,100.0,0.999998,itera);
 
-        State newState = opt_2(s,10000);
+        State newState = opt_2(s,100000);
 
 //      测试输出
 //        newState.evaluation();
-        cout<<endl<< "evaluation"<< newState.Eval<<endl;
+//        cout<<endl<< "evaluation"<< newState.Eval<<endl;
 //        cout<< "number/"<<newState.n.size()<<endl;
         for(int i = 0; i< newState.n.size()-1;i++)
             cout << newState.n[i].number<<endl;
@@ -68,6 +67,7 @@ State simulatedAnnealing(State sState, double Tmin, double T, double r , int sto
 //    cout<< "sState"<< sState.Eval<<endl<<"start"<<endl;
 
     State miniState;
+    miniState.n = sState.n;
     miniState.Eval = 9999999999;
 //    //      测试输出
 //    cout<<"miniState";
@@ -169,23 +169,30 @@ State opt_2(State s, int stop_iteration){
     for(int i =0;i<stop_iteration;i++){
         double eval = s.opt2_value(mini,maxi);
 
-        cout<<"eval "<<eval<<endl;
+//        cout<<"  mini  "<<mini<<"  maxi  "<<maxi<<endl;
+//        cout<<"eval "<<eval<<endl;
+
         if(eval < minState.Eval){
-            cout<<"----------"<<endl<<"before"<<endl;
-            s.print_node();
-            cout<<"eval "<<s.Eval<<endl;
+
+//            cout<<"----------------------------------"<<endl;
+//            cout<<"----------"<<endl<<"before"<<endl;
+//            s.print_node();
+//            cout<<"eval "<<s.Eval<<endl;
+
             s.n = s.opt2(mini,maxi);
             s.Eval =eval;
-            cout<<"after"<<endl;
-            s.print_node();
-            cout<<"a_eval "<<s.Eval<<endl;
-            cout<<"-----------"<<endl;
+
+//           cout<<"after"<<endl;
+//            s.print_node();
+//            cout<<"a_eval "<<s.Eval<<endl;
+//            cout<<"-----------"<<endl;
 
             minState.n = s.n;
             minState.Eval = eval;
-            cout<<"mini"<<endl;
-            minState.print_node();
-            cout<<"amini_eval "<<minState.Eval<<endl;
+
+//            cout<<"mini"<<endl;
+//            minState.print_node();
+//            cout<<"amini_eval "<<minState.Eval<<endl;
             //      测试输出
 //            cout<< "i"<<i<<"  minStateevaluation"<< minState.evaluation()<<endl;
         }

@@ -93,10 +93,11 @@ public:
 
         int i = dis1(gen);
         int j = dis1(gen);
-        while(j == i)
+        while(j == i || (i==0 && j == length-1) ||( i == length-1 && j == 0 )||( i == 0 && j == length )|| (i == length && j == 0))
             j = dis1(gen);
         int mini  = min(i,j);
         int maxi = max(i,j);
+//        cout << "i "<< i <<" j "<<j<<endl;
 //        auto it_i = n.begin()+mini;
 //        auto it_j=n.begin()+maxi;
 
@@ -105,23 +106,23 @@ public:
 //        eval = Eval-distance(*(it_i-1),*(it_i))-distance(*(it_j-1),*(it_j));
 //        eval = eval+ distance(*(it_i-1),*(it_j-1))+distance(*(it_i),*(it_j));
         if(mini == 0) {
-            double temp = distance(n[length - 1], n[0]);
-            double temp2=distance(n[maxi - 1], n[maxi]);
-            cout<<"0"<<temp<<" "<<temp2<<endl;
+//            double temp = distance(n[length - 1], n[0]);
+//            double temp2=distance(n[maxi - 1], n[maxi]);
+//            cout<<"0"<<temp<<" "<<temp2<<endl;
             eval = Eval - distance(n[length - 1], n[0]) - distance(n[maxi - 1], n[maxi]);
             eval += distance(n[length-1], n[maxi - 1]) + distance(n[maxi], n[0]);
         }
         else if(maxi == length){
-            double temp = distance(n[length - 1], n[0]);
-            double temp2=distance(n[mini - 1], n[mini]);
-            cout<<"1"<<temp<<" "<<temp2<<endl;
+//            double temp = distance(n[length - 1], n[0]);
+//            double temp2=distance(n[mini - 1], n[mini]);
+//            cout<<"1"<<temp<<" "<<temp2<<endl;
             eval = Eval - distance(n[length - 1], n[0]) - distance(n[mini - 1], n[mini]);
             eval += distance(n[length-1], n[mini - 1]) + distance(n[mini], n[0]);
         }
         else{
-            double temp= distance(n[mini - 1], n[mini]);
-            double temp2=distance(n[maxi - 1], n[maxi]);
-            cout<<"2"<<temp<<" "<<temp2<<endl;
+//            double temp= distance(n[mini - 1], n[mini]);
+//            double temp2=distance(n[maxi - 1], n[maxi]);
+//            cout<<"2"<<temp<<" "<<temp2<<endl;
             eval = Eval - distance(n[mini - 1], n[mini]) - distance(n[maxi - 1], n[maxi]);
             eval += distance(n[mini - 1], n[maxi - 1]) + distance(n[maxi], n[mini]);
         }
@@ -131,8 +132,8 @@ public:
         return eval;
     }
     vector<Node> opt2(int mini, int maxi){
-        cout<<"before_opt2"<<endl;
-        print_node();
+//        cout<<"before_opt2"<<endl;
+//        print_node();
 
         auto it_i = n.begin()+mini;
         auto it_j=n.begin()+maxi;
@@ -143,8 +144,10 @@ public:
         n.erase(it_i,it_j);
         reverse(b.begin(),b.end());
         n.insert(it_i,b.begin(),b.end());
-        cout<<"after_opt2"<<endl;
-        print_node();
+
+//        cout<<"after_opt2"<<endl;
+//        print_node();
+
         return n;
 
 //        vector<Node> after;
